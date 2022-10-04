@@ -32,7 +32,7 @@ const buildingsUrl =
  ********************************************************************/
 const map = new Map({
   basemap: "dark-gray-vector",
-  ground: "world-elevation"
+  ground: "world-elevation",
 });
 
 const view = new SceneView({
@@ -43,31 +43,32 @@ const view = new SceneView({
 
   environment: {
     atmosphereEnabled: false,
-    starsEnabled: false
-  }
+    starsEnabled: false,
+  },
 });
+
 
 const buildingSymbol = new MeshSymbol3D({
   symbolLayers: [
     new FillSymbol3DLayer({
       material: {
         color: [40, 40, 40, 0.5],
-        colorMixMode: "tint"
+        colorMixMode: "tint",
       },
       edges: new SolidEdges3D({
         size: 0.5,
-        color: [255, 255, 255, 0.5]
-      })
-    })
-  ]
+        color: [255, 255, 255, 0.5],
+      }),
+    }),
+  ],
 });
 
 const buildingsLayer = new SceneLayer({
   url: buildingsUrl,
   outFields: ["*"],
   renderer: new SimpleRenderer({
-    symbol: buildingSymbol
-  })
+    symbol: buildingSymbol,
+  }),
 });
 
 map.add(buildingsLayer);
@@ -85,13 +86,13 @@ const femaleStreetSymbol = {
       new PathSymbol3DLayer({
         profile: "quad",
         material: {
-          color: FEMALE_COLOR
+          color: FEMALE_COLOR,
         },
         width: 10,
-        height: 3
-      })
-    ]
-  })
+        height: 3,
+      }),
+    ],
+  }),
 };
 
 const maleStreetSymbol = {
@@ -101,25 +102,25 @@ const maleStreetSymbol = {
       new PathSymbol3DLayer({
         profile: "quad",
         material: {
-          color: MALE_COLOR
+          color: MALE_COLOR,
         },
         width: 10,
-        height: 3
-      })
-    ]
-  })
+        height: 3,
+      }),
+    ],
+  }),
 };
 
 const streetsLayer = new FeatureLayer({
   url: streetsUrl,
   outFields: ["*"],
   elevationInfo: {
-    mode: "on-the-ground"
+    mode: "on-the-ground",
   },
   renderer: new UniqueValueRenderer({
     field: "gender",
-    uniqueValueInfos: [femaleStreetSymbol, maleStreetSymbol]
-  })
+    uniqueValueInfos: [femaleStreetSymbol, maleStreetSymbol],
+  }),
 });
 
 map.add(streetsLayer);
@@ -129,7 +130,7 @@ map.add(streetsLayer);
  **************************************************/
 
 streetsLayer.popupTemplate = new PopupTemplate({
-  content: "<p><strong>{str_name}</strong></p><p>{snb_erlaeu}</p>"
+  content: "<p><strong>{str_name}</strong></p><p>{snb_erlaeu}</p>",
 });
 
 /**************************************************
@@ -137,21 +138,21 @@ streetsLayer.popupTemplate = new PopupTemplate({
  **************************************************/
 
 const searchWidget = new Search({
-  view: view
+  view: view,
 });
 
 view.ui.add(searchWidget, {
   position: "top-right",
-  index: 0
+  index: 0,
 });
 
 let legend = new Legend({
-  view: view
+  view: view,
 });
 
 view.ui.add(legend, "bottom-right");
 let homeWidget = new Home({
-  view: view
+  view: view,
 });
 
 view.ui.add(homeWidget, "top-left");
@@ -177,10 +178,10 @@ const chart = new Chart(chartCanvas, {
         label: "Zurich streets by gender",
         data: [femaleStreetsCounts, maleStreetsCount],
         backgroundColor: [FEMALE_COLOR, MALE_COLOR],
-        hoverOffset: 4
-      }
-    ]
-  }
+        hoverOffset: 4,
+      },
+    ],
+  },
 });
 
 view.whenLayerView(streetsLayer).then((layerView) => {
@@ -191,7 +192,7 @@ view.whenLayerView(streetsLayer).then((layerView) => {
       // Query the features
       const results = await layerView.queryFeatures({
         geometry: view.extent,
-        returnGeometry: true
+        returnGeometry: true,
       });
 
       const graphics = results.features;
