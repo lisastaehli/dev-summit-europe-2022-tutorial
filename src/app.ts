@@ -20,9 +20,6 @@ import Home from "@arcgis/core/widgets/Home";
 import { when } from "@arcgis/core/core/reactiveUtils";
 import { Chart, registerables } from "chart.js";
 
-import "@arcgis/core/assets/esri/themes/light/main.css";
-import "./index.css";
-
 const streetsUrl =
   "https://services2.arcgis.com/cFEFS0EWrhfDeVw9/arcgis/rest/services/Berlin_Equal_Street_Names/FeatureServer";
 const buildingsUrl =
