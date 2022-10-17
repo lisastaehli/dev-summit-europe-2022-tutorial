@@ -126,28 +126,30 @@ map.add(streetsLayer);
  * Step 3 - Add a popup with the name & description of the street *
  **************************************************/
 
- const arcadeExpressionInfos = [
-  new ExpressionInfo({
+const arcadeExpressionInfos = [
+  {
     name: "title",
     title: "Name of the person the street is named after.",
-    expression: "fromJSON($feature.details).labels.en.value"
-  }),
-  new ExpressionInfo({
+    expression: "fromJSON($feature.details).labels.en.value",
+  },
+  {
     name: "description",
     title: "Description of the person the street is named after.",
-    expression: "fromJSON($feature.details).descriptions.en.value"
-  }),
-  new ExpressionInfo({
+    expression: "fromJSON($feature.details).descriptions.en.value",
+  },
+  {
     name: "link",
     title: "Link to wikipedia article.",
-    expression: "fromJSON($feature.details).sitelinks.enwiki.url"
-  }),
+    expression: "fromJSON($feature.details).sitelinks.enwiki.url",
+  },
 ];
 
 streetsLayer.popupTemplate = new PopupTemplate({
   content:
     "<p><strong>{name}</strong></p><p>{expression/title}: {expression/description}</p><p><a href='{expression/link}'>Learn more</a></p><p>",
-  expressionInfos: arcadeExpressionInfos
+  expressionInfos: arcadeExpressionInfos.map(
+    (infos) => new ExpressionInfo(infos)
+  ),
 });
 
 /**************************************************
