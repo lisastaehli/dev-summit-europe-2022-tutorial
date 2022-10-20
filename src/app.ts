@@ -66,6 +66,7 @@ const buildingsLayer = new SceneLayer({
   renderer: new SimpleRenderer({
     symbol: buildingSymbol,
   }),
+  legendEnabled: false,
 });
 
 map.add(buildingsLayer);
@@ -157,24 +158,20 @@ streetsLayer.popupTemplate = new PopupTemplate({
  **************************************************/
 
 const searchWidget = new Search({
+  container: "search-widget-container",
   view: view,
 });
 
-view.ui.add(searchWidget, {
-  position: "top-right",
-  index: 0,
+let homeWidget = new Home({
+  view: view,
 });
+view.ui.add(homeWidget, "top-left");
 
 let legend = new Legend({
   view: view,
 });
 
 view.ui.add(legend, "bottom-right");
-let homeWidget = new Home({
-  view: view,
-});
-
-view.ui.add(homeWidget, "top-left");
 
 /**************************************************
  * Step 5 - Add a chart that shows the distribution of the streets by gender *
