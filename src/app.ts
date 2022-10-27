@@ -194,11 +194,15 @@ const chart = new Chart(chartCanvas, {
         label: "Zurich streets by gender",
         data: [femaleStreetsCounts, maleStreetsCount],
         backgroundColor: [FEMALE_COLOR, MALE_COLOR],
+        borderColor: [FEMALE_COLOR, MALE_COLOR],
         hoverOffset: 4,
       },
     ],
   },
 });
+
+// set default font color to white
+Chart.defaults.color = "#fff";
 
 view.whenLayerView(streetsLayer).then((layerView) => {
   when(
