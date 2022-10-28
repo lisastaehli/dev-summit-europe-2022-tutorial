@@ -66,6 +66,7 @@ const view = new SceneView({
  **************************************************/
 
 const treesLayer = new FeatureLayer({
+  title: "Berlin trees",
   minScale: 5000, 
   url: treesUrl,
   outFields: ["*"],
@@ -121,6 +122,7 @@ const maleStreetSymbol = {
 };
 
 const streetsLayer = new FeatureLayer({
+  title: "Berlin streets",
   url: streetsUrl,
   outFields: ["*"],
   elevationInfo: {
@@ -139,6 +141,7 @@ map.add(streetsLayer);
  **************************************************/
 
 const districtsLayer = new FeatureLayer({
+  title: "Berlin district boundaries",
   url: districtsUrl,
   outFields: ["*"],
   elevationInfo: {
@@ -163,6 +166,7 @@ const districtsLayer = new FeatureLayer({
 });
 
 const districtsLabelLayer = new FeatureLayer({
+  title: "Berlin district names",
   url: districtsUrl,
   outFields: ["*"],
   elevationInfo: {
@@ -237,6 +241,7 @@ const buildingSymbol = new MeshSymbol3D({
 });
 
 const buildingsLayer = new SceneLayer({
+  title: "Berlin 3D buildings",
   url: buildingsUrl,
   outFields: ["*"],
   renderer: new SimpleRenderer({
