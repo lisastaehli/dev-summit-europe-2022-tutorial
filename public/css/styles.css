@@ -1,6 +1,5 @@
 html,
 body,
-
 .temporary-header {
   padding: 0.75rem;
   font-size: 20px;
@@ -17,10 +16,6 @@ body,
   margin: 0;
   height: 100%;
   width: 100%;
-}
-
-.esri-view-surface:focus::after {
-  outline-width: 0px !important;
 }
 
 #chart {

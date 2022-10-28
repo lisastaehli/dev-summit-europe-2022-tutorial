@@ -22,12 +22,14 @@ import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
 import PopupTemplate from "@arcgis/core/PopupTemplate";
 import ExpressionInfo from "@arcgis/core/form/ExpressionInfo";
 import Search from "@arcgis/core/widgets/Search";
-import Legend from "@arcgis/core/widgets/Legend";
 import Home from "@arcgis/core/widgets/Home";
+import LayerList from "@arcgis/core/widgets/LayerList";
 
 import { when } from "@arcgis/core/core/reactiveUtils";
 import { Chart, registerables } from "chart.js";
 
+
+// Layers
 const streetsUrl =
   "https://services2.arcgis.com/cFEFS0EWrhfDeVw9/arcgis/rest/services/Berlin_Equal_Street_Names/FeatureServer";
 const buildingsUrl =
@@ -40,7 +42,7 @@ const treesUrl =
   "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Baumkataster_Berlin/FeatureServer/0/";
 
 /********************************************************************
- * Step 1 - Basemap with 3D buildings *
+ * Step 1 - Add scene with basemap *
  ********************************************************************/
 const map = new Map({
   basemap: "dark-gray-vector",
@@ -80,7 +82,7 @@ const treesLayer = new FeatureLayer({
 map.add(treesLayer);
 
 /**************************************************
- * Step 2 - Change the streets renderer to show a 3D line *
+ * Step 3 - Change the streets renderer to show a 3D line *
  **************************************************/
 const FEMALE_COLOR = "#8400a8";
 const MALE_COLOR = "#e6e600";
@@ -130,6 +132,10 @@ const streetsLayer = new FeatureLayer({
 });
 
 map.add(streetsLayer);
+
+/**************************************************
+ * Step 4 - Add districts and 3D labels *
+ **************************************************/
 
 const districtsLayer = new FeatureLayer({
   url: districtsUrl,
@@ -184,9 +190,9 @@ const districtsLabelLayer = new FeatureLayer({
     symbol: new PointSymbol3D({
       symbolLayers: [
         new ObjectSymbol3DLayer({
-          width: 1, 
+          width: 1,
           height: 1,
-          depth: 1, 
+          depth: 1,
           resource: { primitive: "sphere" },
           material: { color: "white" },
         }),
@@ -209,6 +215,10 @@ const districtsLabelLayer = new FeatureLayer({
 
 map.add(districtsLayer);
 map.add(districtsLabelLayer);
+
+/**************************************************
+ * Step 5 - Add 3D buildings with edges rendering *
+ **************************************************/
 
 const buildingSymbol = new MeshSymbol3D({
   symbolLayers: [
@@ -237,7 +247,7 @@ const buildingsLayer = new SceneLayer({
 map.add(buildingsLayer);
 
 /**************************************************
- * Step 3 - Add a popup with the name & description of the street *
+ * Step 6 - Add a popup with the name & description of the street *
  **************************************************/
 
 const arcadeExpressionInfos = [
@@ -267,7 +277,7 @@ streetsLayer.popupTemplate = new PopupTemplate({
 });
 
 /**************************************************
- * Step 4 - Find a widget in the docs to add to your app *
+ * Step 7 - Find a widget in the docs to add to your app *
  **************************************************/
 
 new Search({
@@ -280,14 +290,19 @@ let homeWidget = new Home({
 });
 view.ui.add(homeWidget, "top-left");
 
-let legend = new Legend({
+const layerList = new LayerList({
   view: view,
+  listItemCreatedFunction: (event) => {
+    const item = event.item;
+    if (item.layer.type != "group") {
+      item.panel = { content: "legend", open: true };
+    }
+  },
 });
-
-view.ui.add(legend, "top-right");
+view.ui.add(layerList, "top-right");
 
 /**************************************************
- * Step 5 - Add a chart that shows the distribution of the streets by gender *
+ * Step 8 - Add a chart that shows the distribution of the streets by gender *
  **************************************************/
 Chart.register(...registerables);
 
@@ -314,7 +329,7 @@ const chart = new Chart(chartCanvas, {
   },
 });
 
-// set default font color to white
+// set default chart font color to white
 Chart.defaults.color = "#fff";
 
 view.whenLayerView(streetsLayer).then((layerView) => {
