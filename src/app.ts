@@ -66,6 +66,7 @@ const view = new SceneView({
  **************************************************/
 
 const treesLayer = new FeatureLayer({
+  minScale: 5000, 
   url: treesUrl,
   outFields: ["*"],
   elevationInfo: {
