@@ -87,7 +87,7 @@ map.add(treesLayer);
  * Step 3 - Change the streets renderer to show a 3D line *
  **************************************************/
 const FEMALE_COLOR = "#8400a8";
-const MALE_COLOR = "#e6e600";
+const MALE_COLOR = "#e6bc01";
 
 const femaleStreetSymbol = {
   value: "F",
