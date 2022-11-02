@@ -1,5 +1,6 @@
 const path = require('path');
 
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -31,7 +32,6 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     chunkFilename: 'chunks/[id].js',
     publicPath: '',
-    clean: true
   },
   devServer: {
     static: path.join(__dirname, 'dist'),
@@ -39,6 +39,11 @@ module.exports = {
     port: 3001,
   },
   plugins: [
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: [
+        '**/*',
+        '!.git/**',]
+    }),
     new HtmlWebPackPlugin({
       title: 'ArcGIS API  for JavaScript',
       template: './public/index.html',
