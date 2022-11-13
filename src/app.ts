@@ -28,7 +28,6 @@ import LayerList from "@arcgis/core/widgets/LayerList";
 import { when } from "@arcgis/core/core/reactiveUtils";
 import { Chart, registerables } from "chart.js";
 
-
 // Layers
 const streetsUrl =
   "https://services2.arcgis.com/cFEFS0EWrhfDeVw9/arcgis/rest/services/Berlin_Equal_Street_Names/FeatureServer";
@@ -67,7 +66,7 @@ const view = new SceneView({
 
 const treesLayer = new FeatureLayer({
   title: "Berlin trees",
-  minScale: 5000, 
+  minScale: 5000,
   url: treesUrl,
   outFields: ["*"],
   elevationInfo: {
@@ -346,7 +345,6 @@ view.whenLayerView(streetsLayer).then((layerView) => {
       // Query the features
       const results = await layerView.queryFeatures({
         geometry: view.extent,
-        returnGeometry: true,
       });
 
       const graphics = results.features;
